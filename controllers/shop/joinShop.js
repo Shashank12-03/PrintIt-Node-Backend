@@ -18,6 +18,7 @@ async function joinShop(socket,data,redisClient) {
             const id = shop.id;
             const key = `shopSocket_${id}`;
             const socketId = socket.id;
+            console.log(socketId);
             await redisClient.set(key,socketId);
             console.log(`shop onnected with socket id ${socketId}`);
             socket.user = shop;

@@ -11,6 +11,7 @@ const setSocketEventsForShop = require('./events/shop/index.js');
 
 require('dotenv').config();
 const PORT = process.env.PORT;
+console.log(PORT);
 
 const coreOption = {
     origin:"*",
@@ -23,7 +24,7 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server,{
     cors: {
-        origin: "*", // Update this to restrict to your frontend URL later.
+        origin: "*",
         methods: ["GET", "POST"],
         allowedHeaders: ["Content-Type", "Authorization"],
         credentials: true,
@@ -50,7 +51,6 @@ io.on("connection",(socket)=>{
         console.log('user');
         setSocketEventsForUser(socket,io, redisClient);
     } else if (userType === "shop") {
-        console.log('shop');
         setSocketEventsForShop(socket, redisClient);
     } else {
         console.error('Unknown user type:', userType);

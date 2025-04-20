@@ -1,8 +1,8 @@
 const redis = require('redis');
 const url = require('node:url');
 
-const REDIS_HOST = process.env.REDIS_HOST
-const REDIS_PASSWORD=process.env.REDIS_PASSWORD
+const REDIS_HOST ="redis://default:OdM73aZuJu5hozpzFWPVgHogJE7xjsqS@redis-13106.c9.us-east-1-2.ec2.redns.redis-cloud.com:13106"
+const REDIS_PASSWORD="OdM73aZuJu5hozpzFWPVgHogJE7xjsqS"
 const redisUrl = url.parse(REDIS_HOST);
 
 console.log(redisUrl);

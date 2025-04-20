@@ -1,7 +1,8 @@
 
 async function fileUpload(socket, io, redisClient,data) {
     try {
-        const {file, fileName, shopId, userId, message} = data;
+        const {file, fileName, shopId, user, message} = data;
+        console.log(fileName, shopId, user, message);
         const key = `shopSocket_${shopId}`;
         const socketId = await redisClient.get(key);
         if (!socketId) {
@@ -9,18 +10,14 @@ async function fileUpload(socket, io, redisClient,data) {
             return socket.emit('error',{'message':'shop is offline'});
         }
         
-        console.log(socketId);
         // const fileKey = `userFile_${fileName}_${Date.now}`;
         // await redisClient.set(fileKey,JSON.stringify({fileName, file, message}));
         // await redisClient.expire(fileKey,900);
-        
+        console.log('socketId', socketId);
+        const files = {fileName,file,message}
         io.to(socketId).emit('file_received',{
-            fileName,
-            file,
-            message,
-            userId,
-            userSocket:socket.id,
-            fileKey
+            files,
+            sender:user
         });
 
         return socket.emit('sent',{'message':'file sent to the shop'});
